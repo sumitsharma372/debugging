@@ -1,0 +1,41 @@
+<html>
+<body>
+    <form onsubmit="clickHandler(event)">                 <!-- changed click(event)  to "clickHandler(event)"-->
+        <input type="text" id="name"  placeholder="Your Name">
+        <input type="submit">
+    </form>
+    <div id="container">                                 <!--changed class to id-->
+    </div>
+    <div id="cont"></div>
+    <div class="clock"></div>                            <!-- added this div to check the time put in  setInterval-->
+</body>
+
+<script>
+    function clickHandler(event) {                        //changed e to event
+        event.preventDefault();
+        var x = document.getElementById('name')
+        var section = document.getElementById('cont');    //changed getElementByClassName to getElementById
+        section.innerHTML = x.value;                      //changed innerText to value to get the value put in the input tag
+    }
+    let g;
+    try {
+        fetch("https://raw.githubusercontent.com/EthanRBrown/rrad/master/addresses-us-1000.json")
+            .then(res => res.json())                       //changed json to json()
+            .then(data => {
+                console.log(data.addresses[0]);
+                g = data.addresses[0].address1;             //changed addresses to addresses[0] because addresses is not an object
+                document.getElementById('container').innerText = g;      //added .innerText
+            })
+            .catch(error => console.log(error))          //changed err to error
+    } catch (error) { console.log(error); };             //changed err to error
+
+    const clock = document.querySelector(".clock");      //changed "clock" to ".clock"
+    setInterval(() => {
+        const date = new Date();
+        clock.innerText = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    }, 1000);                                           //changed 'getHour' to "getHours"; 'getMinute' to "getMinutes"; 'getSecond' to "getSeconds"
+
+</script>
+
+
+</html>
